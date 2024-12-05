@@ -13,6 +13,15 @@
 #include <cmath>
 
 
+ /*********************************************
+  * ACCELERATION : ADD
+  *  a += a
+  *********************************************/
+void Acceleration::add(const Acceleration& acceleration)
+{
+   ddx += acceleration.getDDX();
+   ddy += acceleration.getDDY();
+}
 
 /*********************************************
  * ACCELERATION : SET
@@ -20,7 +29,9 @@
  *********************************************/
 void Acceleration::set(const Angle & a, double magnitude)
 {
-   
+   double r = a.getRadians();
+   ddx = magnitude * sin(r);
+   ddy = magnitude * cos(r);
 }
 void AccelerationDummy::set(const Angle& a, double magnitude)
 {

@@ -30,17 +30,20 @@ class Acceleration
 
 public:
    // constructors
-   Acceleration()                       : ddx(9.9), ddy(9.9) { }
-   Acceleration(double ddx, double ddy) : ddx(9.9), ddy(9.9) { }
+   Acceleration() : ddx(0), ddy(0) { }
+   Acceleration(double ddx, double ddy) : ddx(ddx), ddy(ddy) { }
 
    // getters
-   virtual double getDDX()   const           { return 9.9;             }
-   virtual double getDDY()   const           { return 9.9;             }
+   virtual double getDDX()   const           { return this->ddx;             }
+   virtual double getDDY()   const           { return this->ddy;             }
 
    // setters                        
-   virtual void setDDX(double ddx)           {  }
-   virtual void setDDY(double ddy)           {  }
+   virtual void setDDX(double ddx) { this->ddx = ddx; }
+   virtual void setDDY(double ddy) { this->ddy = ddy; }
    virtual void set(const Angle & a, double magnitude);
+   void addDDX(double ddx) { this->ddx += ddx; }
+   void addDDY(double ddy) { this->ddy += ddy; }
+   void add(const Acceleration& rhs);
 
 private:
    double ddx;     // horizontal acceleration
