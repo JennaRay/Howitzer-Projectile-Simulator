@@ -1,9 +1,9 @@
-* PHYSICS
+/* PHYSICS
 * Author:
 *<your name here>
 * Summary :
    *Laws of motion, effects of gravity, wind resistence, etc.
-   ************************************************************************ /
+   ************************************************************************/
 
 #pragma once
 

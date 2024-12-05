@@ -15,10 +15,10 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-/*********************************************
- * TEST ACCELERATION
- * Unit tests for Acceleration
- *********************************************/
+ /*********************************************
+  * TEST ACCELERATION
+  * Unit tests for Acceleration
+  *********************************************/
 class TestAcceleration : public UnitTest
 {
 public:
@@ -59,11 +59,12 @@ private:
     *****************************************************************
     *****************************************************************/
 
-   /*********************************************
-    * name:    DEFAULT CONSTRUCTOR
-    * input:   nothing
-    * output:  zeros
-    *********************************************/
+    /*********************************************
+     * name:    DEFAULT CONSTRUCTOR
+     * input:   nothing
+     * output:  dx=0.0
+     *          dy=0.0
+     *********************************************/
    void constructor_default()
    {  // setup
       // exercise
@@ -73,11 +74,12 @@ private:
       assertEquals(a.ddx, 0.0);
       assertEquals(a.ddy, 0.0);
    }  // teardown
-      
+
    /*********************************************
     * name:    NON-DEFAULT CONSTRUCTOR
     * input:   2.3, 4.5
-    * output:  (2.3, 4.5)
+    * output:  dx=2.3
+    *          dy=4.5
     *********************************************/
    void constructor_nonDefault()
    {  // setup
@@ -101,11 +103,11 @@ private:
     *****************************************************************/
 
 
-   /*********************************************
-    * name:    GET DDX
-    * input:   (2.3, 4.5)
-    * output:  2.3
-    *********************************************/
+    /*********************************************
+     * name:    GET DDX
+     * input:   (2.3, 4.5)
+     * output:  2.3
+     *********************************************/
    void getDDX()
    {  // setup
       Acceleration a;
@@ -119,7 +121,7 @@ private:
       // verify
       assertEquals(a.ddx, 2.3);
       assertEquals(a.ddy, 4.5);
-      assertEquals(ddx,2.3);
+      assertEquals(ddx, 2.3);
    }  // teardown
 
    /*********************************************
@@ -150,17 +152,17 @@ private:
     *****************************************************************
     *****************************************************************/
 
-   /*********************************************
-    * name:    SET DDX
-    * input:   (-99.9, -88.8) 11.1
-    * output:  (11.1, -88.8)
-    *********************************************/
+    /*********************************************
+     * name:    SET DDX
+     * input:   (-99.9, -88.8) setDDX(11.1)
+     * output:  (11.1, -88.8)
+     *********************************************/
    void setDDX()
    {  // setup
       Acceleration a;
       a.ddx = -99.9;
       a.ddy = -88.8;
-      
+
       // exercise
       a.setDDX(11.1);
 
@@ -171,7 +173,7 @@ private:
 
    /*********************************************
     * name:    SET DDX
-    * input:   (-99.9, -88.8) 11.1
+    * input:   (-99.9, -88.8) setDDY(11.1)
     * output:  (-99.9, 11.1)
     *********************************************/
    void setDDY()
@@ -190,7 +192,7 @@ private:
 
    /*********************************************
     * name:    SET UP
-    * input:   (-99.9, -88.8) 0 degrees, 3.3
+    * input:   (-99.9, -88.8) 0 degrees, 3.3=speed
     * output:  (0.0, 3.3)
     *********************************************/
    void set_up()
@@ -206,15 +208,15 @@ private:
       a.set(angle, magnitude);
 
       // verify
-      assertEquals(a.ddx, 0.0);
-      assertEquals(a.ddy, 3.3);
+      assertEquals(a.ddx, 0.0); // 0.0 = 3.3 sin(0)
+      assertEquals(a.ddy, 3.3); // 3.3 = 3.3 cos(0)
       assertEquals(angle.radians, 0.0);
       assertEquals(magnitude, 3.3);
    }
-   
+
    /*********************************************
     * name:    SET DOWN
-    * input:   (-99.9, -88.8) 180 degrees, 3.3
+    * input:   (-99.9, -88.8) 180 degrees, 3.3=speed
     * output:  (0.0, -3.3)
     *********************************************/
    void set_down()
@@ -230,15 +232,15 @@ private:
       a.set(angle, magnitude);
 
       // verify
-      assertEquals(a.ddx, 0.0);
-      assertEquals(a.ddy,-3.3);
+      assertEquals(a.ddx, 0.0); //  0.0 = 3.3 sin(180)
+      assertEquals(a.ddy, -3.3); // -3.3 = 3.3 cos(180)
       assertEquals(angle.radians, M_PI);
       assertEquals(magnitude, 3.3);
    }
 
    /*********************************************
     * name:    SET RIGHT
-    * input:   (-99.9, -88.8) 90 degrees, 3.3
+    * input:   (-99.9, -88.8) 90 degrees, 3.3=speed
     * output:  (3.3, 0.0)
     *********************************************/
    void set_right()
@@ -254,15 +256,15 @@ private:
       a.set(angle, magnitude);
 
       // verify
-      assertEquals(a.ddx, 3.3);
-      assertEquals(a.ddy, 0.0);
+      assertEquals(a.ddx, 3.3); // 3.3 = 3.3 sin(90)
+      assertEquals(a.ddy, 0.0); // 0.0 = 3.3 cos(90)
       assertEquals(angle.radians, M_PI_2);
       assertEquals(magnitude, 3.3);
    }
-   
+
    /*********************************************
     * name:    SET LEFT
-    * input:   (-99.9, -88.8) 270 degrees, 3.3
+    * input:   (-99.9, -88.8) 270 degrees, 3.3=speed
     * output:  (3.3, 0.0)
     *********************************************/
    void set_left()
@@ -278,15 +280,15 @@ private:
       a.set(angle, magnitude);
 
       // verify
-      assertEquals(a.ddx, -3.3);
-      assertEquals(a.ddy, 0.0);
+      assertEquals(a.ddx, -3.3); // -3.3 = 3.3 sin(270)
+      assertEquals(a.ddy, 0.0);  //  0.0 = 3.3 cos(270)
       assertEquals(angle.radians, M_PI_2 + M_PI);
       assertEquals(magnitude, 3.3);
    }
-   
+
    /*********************************************
     * name:    SET DIAGONAL
-    * input:   (-99.9, -88.8) 57 degrees, 1.0
+    * input:   (-99.9, -88.8) 57 degrees, 1.0=speed
     * output:  (0.84, 0.54)
     *********************************************/
    void set_diagonal()
@@ -302,28 +304,40 @@ private:
       a.set(angle, magnitude);
 
       // verify
-      assertEquals(a.ddx, 0.8414);
-      assertEquals(a.ddy, 0.5403);
+      assertEquals(a.ddx, 0.8414); // 0.8414 = 1.0 sin(57)
+      assertEquals(a.ddy, 0.5403); // 0.5403 = 1.0 cos(57)
       assertEquals(angle.radians, 1.0);
-      assertEquals(magnitude,1.0);
+      assertEquals(magnitude, 1.0);
    }
-   
+
    /*****************************************************************
     *****************************************************************
     * SETTERS
     *****************************************************************
     *****************************************************************/
 
-   /*********************************************
-    * name:    ADD DDX ZERO
-    * input:   a=(2.3, 4.5) ddx=0.0
-    * output:  a=(2.3, 4.5)
-    *********************************************/
+    /*********************************************
+     * name:    ADD DDX ZERO
+     * input:   a=(2.3, 4.5) ddx=0.0
+     * output:  a=(2.3, 4.5)
+     *********************************************/
    void addDDX_zero()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 2.3;
+      a.ddy = 4.5;
+      double ddx = 0.0;
+
+      // exercise
+      a.addDDX(ddx);
+
+      // verify
+      assertEquals(a.ddx, 2.3);
+      assertEquals(a.ddy, 4.5);
+      assertEquals(ddx, 0.0);
    }
-   
+
    /*********************************************
     * name:    ADD DDX 4.1
     * input:   a=(2.3, 4.5) ddx=4.1
@@ -331,7 +345,19 @@ private:
     *********************************************/
    void addDDX_value()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 2.3;
+      a.ddy = 4.5;
+      double ddx = 4.1;
+
+      // exercise
+      a.addDDX(ddx);
+
+      // verify
+      assertEquals(a.ddx, 6.4);
+      assertEquals(a.ddy, 4.5);
+      assertEquals(ddx, 4.1);
    }
 
    /*********************************************
@@ -341,7 +367,19 @@ private:
     *********************************************/
    void addDDY_zero()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 2.3;
+      a.ddy = 4.5;
+      double ddy = 0.0;
+
+      // exercise
+      a.addDDY(ddy);
+
+      // verify
+      assertEquals(a.ddx, 2.3);
+      assertEquals(a.ddy, 4.5);
+      assertEquals(ddy, 0.0);
    }
 
    /*********************************************
@@ -351,7 +389,19 @@ private:
     *********************************************/
    void addDDY_value()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 2.3;
+      a.ddy = 4.5;
+      double ddy = 4.1;
+
+      // exercise
+      a.addDDY(ddy);
+
+      // verify
+      assertEquals(a.ddx, 2.3);
+      assertEquals(a.ddy, 8.6);
+      assertEquals(ddy, 4.1);
    }
 
    /*********************************************
@@ -361,7 +411,22 @@ private:
     *********************************************/
    void add_zeroZero()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 0.0;
+      a.ddy = 0.0;
+      Acceleration aRHS;
+      aRHS.ddx = 0.0;
+      aRHS.ddy = 0.0;
+
+      // exercise
+      a.add(aRHS);
+
+      // verify
+      assertEquals(a.ddx, 0.0);
+      assertEquals(a.ddy, 0.0);
+      assertEquals(aRHS.ddx, 0.0);
+      assertEquals(aRHS.ddy, 0.0);
    }
 
    /*********************************************
@@ -371,7 +436,22 @@ private:
     *********************************************/
    void add_valueZero()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 1.1;
+      a.ddy = 2.2;
+      Acceleration aRHS;
+      aRHS.ddx = 0.0;
+      aRHS.ddy = 0.0;
+
+      // exercise
+      a.add(aRHS);
+
+      // verify
+      assertEquals(a.ddx, 1.1);
+      assertEquals(a.ddy, 2.2);
+      assertEquals(aRHS.ddx, 0.0);
+      assertEquals(aRHS.ddy, 0.0);
    }
 
    /*********************************************
@@ -381,7 +461,22 @@ private:
     *********************************************/
    void add_zeroValue()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 0.0;
+      a.ddy = 0.0;
+      Acceleration aRHS;
+      aRHS.ddx = 4.4;
+      aRHS.ddy = 7.7;
+
+      // exercise
+      a.add(aRHS);
+
+      // verify
+      assertEquals(a.ddx, 4.4);
+      assertEquals(a.ddy, 7.7);
+      assertEquals(aRHS.ddx, 4.4);
+      assertEquals(aRHS.ddy, 7.7);
    }
 
    /*********************************************
@@ -391,7 +486,22 @@ private:
     *********************************************/
    void add_valueValue()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Acceleration a;
+      a.ddx = 1.1;
+      a.ddy = 2.2;
+      Acceleration aRHS;
+      aRHS.ddx = 4.4;
+      aRHS.ddy = 7.7;
+
+      // exercise
+      a.add(aRHS);
+
+      // verify
+      assertEquals(a.ddx, 5.5);
+      assertEquals(a.ddy, 9.9);
+      assertEquals(aRHS.ddx, 4.4);
+      assertEquals(aRHS.ddy, 7.7);
    }
 
 };
