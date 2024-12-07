@@ -356,7 +356,7 @@ private:
    {
        // Setup
        Howitzer h;
-       h.getElevation().setRadians(6.1); // Equivalent to (2pi - 0.1)
+       h.getElevation().setRadians(6.1832); // Equivalent to (2pi - 0.1)
 
        // Exercise
        h.rotate(0.2);
@@ -380,7 +380,7 @@ private:
        h.rotate(-0.2 - (4 * M_PI));
 
        // Verify
-       assertEquals(h.getElevation().getRadians(), 6.1); // Equivalent to (2pi - 0.1)
+       assertEquals(h.getElevation().getRadians(), 6.1832); // Equivalent to (2pi - 0.1)
    }
 
    /*****************************************************************

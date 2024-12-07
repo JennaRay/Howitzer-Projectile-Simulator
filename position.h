@@ -62,6 +62,7 @@ public:
    void reverse() { x = x * -1; y = y * -1; }
 
 
+
 private:
    double x;                 // horizontal position
    double y;                 // vertical position

@@ -54,8 +54,8 @@ public:
    // dx = sin a
    double getDx() const { return sin(radians); }
    double getDy() const { return cos(radians); }
-   bool isRight() const { return radians > 0 && radians < M_PI; }
-   bool isLeft() const { return radians > M_PI && radians < 2 * M_PI; }
+   bool Angle::isRight() const { return radians > 0 && radians < M_PI; }
+   bool Angle::isLeft() const { return radians < 0 || radians > M_PI; }
 
 
    // Setters
@@ -69,11 +69,11 @@ public:
    void setRight() { radians = M_PI_2; }
    void setLeft() { radians = M_PI + M_PI_2; }
    void reverse() { radians += M_PI; radians = normalize(radians); }
-   Angle& add(double delta)
+   Angle& Angle::add(double delta)
    {
-      radians += delta;
-      radians = normalize(radians);
-      return *this;
+       radians += delta;
+       radians = normalize(radians); // Ensure wrapping
+       return *this;
    }
 
    // set based on the components
@@ -96,10 +96,11 @@ public:
    }
 
    Angle operator+(double degrees) const { return Angle(); }
+   double normalize(double radians) const;
 
 private:
 
-   double normalize(double radians) const;
+   
 
    double radians;   // 360 degrees equals 2 PI radians
 };

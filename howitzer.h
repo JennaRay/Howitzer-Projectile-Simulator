@@ -22,20 +22,45 @@
 #define DEFAULT_MUZZLE_VELOCITY   827.00     // m/s
 
 
+ /**********************************************************************
+  * Header File:
+  *    HOWITZER
+  * Author:
+  *    <your name here>
+  * Summary:
+  *    Everything we need to know about a howitzer (aka the gun)
+  ************************************************************************/
+
+#pragma once
+
+#include <list>
+#include "angle.h"
+#include "position.h"
+#include "velocity.h"
+#include "physics.h"
+#include "uiDraw.h"
+
+
+#pragma once
+
+#define DEFAULT_MUZZLE_VELOCITY   827.00     // m/s
+
+
 class TestHowitzer;
 
- /*********************************************
-  * Howitzer
-  * Everything we need to know about a howitzer (aka the gun)
-  *********************************************/
+/*********************************************
+ * Howitzer
+ * Everything we need to know about a howitzer (aka the gun)
+ *********************************************/
 class Howitzer
 {
 public:
     // for unit tests
     friend ::TestHowitzer;
+    double radians;
 
     // default constructor
-    Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(45.0) {}
+    Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(45.0), radians(0.0) {}
 
     // draw
     void draw(ogstream& gout, double flightTime) const
@@ -60,35 +85,31 @@ public:
     // get the muzzle velocity
     double getMuzzleVelocity() const { return muzzleVelocity; }
 
- 
-
     // move the angle of the howitzer
-    void Howitzer::rotate(double radian)
+    void rotate(double radian)
     {
-        elevation.add(radian);
+        elevation.setRadians(elevation.getRadians() + radian);
+        elevation.setRadians(elevation.normalize(elevation.getRadians()));
     }
-
 
     // raise (or lower) the howitzer
-    void Howitzer::raise(double radian)
+    void raise(double radian)
     {
-        double currentRadians = elevation.getRadians();
-
         if (elevation.isRight())
-            elevation.add(-radian);
+            elevation.setRadians(elevation.getRadians() - radian);
+        else if (elevation.isLeft())
+            elevation.setRadians(elevation.getRadians() + radian);
         else
-            elevation.add(radian);
+            elevation.setRadians(elevation.getRadians() + radian);
     }
+
 
     void setMuzzleVelocity(double velocity) {
         muzzleVelocity = velocity;
     }
 
-
-
     // get the elevation
-    Angle& getElevation() { return elevation; } 
-
+    Angle& getElevation() { return elevation; }
 
 private:
     Position position;      // initial position of the projectile
