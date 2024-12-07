@@ -25,7 +25,8 @@
     PositionVelocityTime prev = flightPath.back();
     //setup needed variables
     v = prev.v;
-    a = Angle(atan2(v.getDX(), v.getDY()));
+    a = Angle();
+    a.setDegrees(atan2(v.getDX(), v.getDY()) * 180 / M_PI);
     pos = prev.pos;
     acceleration = Acceleration();
     //cout << "velocity: " << v.getSpeed() << endl;

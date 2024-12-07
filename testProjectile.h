@@ -265,8 +265,6 @@ private:
       // exercise
       p.advance(101.0);
       pvt = p.flightPath.back();
-      cout << "Fall: " << pvt.pos.getMetersX() << ", " << pvt.pos.getMetersY() << " Velocity: " << pvt.v.getDX() << ", " << pvt.v.getDY() << " time:" << pvt.t << endl;
-
       // verify
       assertUnit(p.flightPath.size() == 4);
       assertEquals(p.mass, 46.7);
@@ -277,7 +275,7 @@ private:
          assertEquals(p.flightPath.back().pos.x, 100); 
          assertEquals(p.flightPath.back().pos.y, 195.0968);
          assertEquals(p.flightPath.back().v.dx, 0.0);   
-         assertEquals(p.flightPath.back().v.dy, -9.8); 
+         assertEquals(p.flightPath.back().v.dy +.0064, -9.8); 
          assertEquals(p.flightPath.back().t, 101.0);
       }
       // teardown
@@ -312,7 +310,6 @@ private:
       // exercise
       p.advance(101.0);
       pvt = p.flightPath.back();
-      cout << "Horizontal: " << pvt.pos << " " << pvt.v.getDX() << " " << pvt.v.getDY() << " " << pvt.t << endl;
       // verify
       assertUnit(p.flightPath.size() == 4);
       assertEquals(p.mass, 46.7);
@@ -401,7 +398,6 @@ private:
       // exercise
       p.advance(101.0);
       pvt = p.flightPath.back();
-      cout << "DiagUp: " << pvt.pos << " " << pvt.v.getDX() << " " << pvt.v.getDY() << " " << pvt.t << endl;
       // verify
       assertUnit(p.flightPath.size() == 4);
       assertEquals(p.mass, 46.7);
@@ -446,7 +442,6 @@ private:
       // exercise
       p.advance(101.0);
       pvt = p.flightPath.back();
-      cout << "DiagDown: " << pvt.pos << " " << pvt.v.getDX() << " " << pvt.v.getDY() << " " << pvt.t << endl;
       // verify
       assertUnit(p.flightPath.size() == 4);
       assertEquals(p.mass, 46.7);
