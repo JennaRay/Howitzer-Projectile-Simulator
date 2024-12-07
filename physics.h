@@ -128,4 +128,3 @@ double speedSoundFromAltitude(double altitude);
  * Determine the drag coefficient as a function of the speed of sound
  *********************************************************/
 double dragFromMach(double speedMach);
-

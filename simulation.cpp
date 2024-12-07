@@ -8,3 +8,5 @@
  ************************************************************************/
 
  #include "simulation.h"  // for SIMULATION
+#include "ground.h"
+#include "howitzer.h"
