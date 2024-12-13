@@ -27,8 +27,10 @@ public:
    {
       ground.draw(gout);
       howitzer.draw(gout, time);
+      projectile.draw(gout, time);
    };
    Position& getPos() { return posUpperRight; };
+
 private:
    Ground ground;
    Howitzer howitzer;

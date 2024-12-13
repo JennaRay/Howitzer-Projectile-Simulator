@@ -34,7 +34,7 @@ public:
    friend ::TestProjectile;
 
    // create a new projectile with the default settings
-   Projectile() : mass(DEFAULT_PROJECTILE_WEIGHT), radius(DEFAULT_PROJECTILE_RADIUS) {}
+   Projectile() : mass(DEFAULT_PROJECTILE_WEIGHT), radius(DEFAULT_PROJECTILE_RADIUS), isFired(false) {}
 
    void reset()
    {
@@ -45,6 +45,7 @@ public:
       pos = Position();
       v = Velocity();
       acceleration = Acceleration();
+      isFired = false;
    };
 
    // advance the round forward until the next unit of time
@@ -67,6 +68,15 @@ public:
       pvt.v = velocity;
       pvt.t = t;
       flightPath.push_back(pvt);
+
+      isFired = true;
+   }
+   bool checkIsFired() { return isFired; }
+   void draw(ogstream& gout, double time) const
+   {
+      if (flightPath.empty())
+         return;
+      gout.drawProjectile(flightPath.back().pos, time);
    }
 private:
 
@@ -85,4 +95,5 @@ private:
    double mass;           // weight of the M795 projectile. Defaults to 46.7 kg
    double radius;         // radius of M795 projectile. Defaults to 0.077545 m
    std::list<PositionVelocityTime> flightPath;
+   bool isFired;
 };

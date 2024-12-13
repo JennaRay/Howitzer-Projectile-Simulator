@@ -10,6 +10,8 @@
  #include "simulation.h"  // for SIMULATION
 #include "ground.h"
 #include "howitzer.h"
+#include "projectile.h"
+#include "uiInteract.h"
 
 void Simulator::setup()
 {
@@ -22,3 +24,4 @@ void Simulator::setup()
    // reset the projectile
    projectile.reset();
 }
+
