@@ -10,3 +10,15 @@
  #include "simulation.h"  // for SIMULATION
 #include "ground.h"
 #include "howitzer.h"
+
+void Simulator::setup()
+{
+   // generate position for the howitzer
+   howitzer.generatePosition(posUpperRight);
+
+   // reset the ground
+   ground.reset(howitzer.getPosition());
+
+   // reset the projectile
+   projectile.reset();
+}

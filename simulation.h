@@ -22,6 +22,7 @@ class Simulator
 {
 public:
    Simulator(const Position& posUpperRight) : ground(Ground(posUpperRight)), howitzer(Howitzer()), projectile(Projectile()), posUpperRight(posUpperRight)  {};
+   void setup();
    void draw(ogstream& gout, double time) const 
    {
       ground.draw(gout);
