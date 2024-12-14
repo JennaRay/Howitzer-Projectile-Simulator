@@ -40,38 +40,33 @@ void runSimulation(const Position& posUpperRight)
       std::cout << "Press U to increase angle, D to decrease, F to fire, or Q to quit: ";
       std::cin >> input;
 
-      if (input == 'U' || input == 'u')
-         howitzerAngle.add(0.1);
-      else if (input == 'D' || input == 'd')
-         howitzerAngle.add(-0.1);
-      else if ((input == 'F' || input == 'f') && !projectileFired)
-      {
-         Velocity initialVelocity;
-         initialVelocity.setSpeed(100.0); // Replace with logic for initial velocity
-         projectile.fire(howitzerAngle, howitzerPos, initialVelocity, simulationTime);
-         projectileFired = true;
-      }
-      else if (input == 'Q' || input == 'q')
-      {
-         isRunning = false;
-      }
-   }
-}
+        if (input == 'U' || input == 'u')
+            howitzerAngle.add(0.1);
+        else if (input == 'D' || input == 'd')
+            howitzerAngle.add(-0.1);
+        else if ((input == 'F' || input == 'f') && !projectileFired)
+        {
+            Velocity initialVelocity;
+            projectile.fire(howitzerAngle, howitzerPos, initialVelocity, simulationTime);
+            projectileFired = true;
+        }
+        else if (input == 'Q' || input == 'q')
+        {
+            isRunning = false;
+        }
 
- #include "simulation.h"  // for SIMULATION
-#include "ground.h"
-#include "howitzer.h"
-#include "projectile.h"
-#include "uiInteract.h"
+
+    }
+}
 
 void Simulator::setup()
 {
-   // generate position for the howitzer
-   howitzer.generatePosition(posUpperRight);
+    // generate position for the howitzer
+    howitzer.generatePosition(posUpperRight);
 
-   // reset the ground
-   ground.reset(howitzer.getPosition());
+    // reset the ground
+    ground.reset(howitzer.getPosition());
 
-   // reset the projectile
-   projectile.reset();
+    // reset the projectile
+    projectile.reset();
 }
