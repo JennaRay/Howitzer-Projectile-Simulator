@@ -36,6 +36,7 @@ void callBack(const Interface* pUI, void* p)
    pSim->displayStats(gout);
    pSim->handleInput(pUI);
    pSim->advance();
+   pSim->checkCollision();
 }
 
 double Position::metersFromPixels = 40.0;

@@ -47,7 +47,11 @@ public:
       acceleration = Acceleration();
       isFired = false;
    };
-
+   void setPosition(const Position& pos)
+   {
+      this->pos.setPixelsX(pos.getPixelsX());
+      this->pos.setPixelsY(pos.getPixelsY());
+   }
    Position getPosition() const
    {
        return pos; // Return the current position of the projectile
@@ -70,8 +74,10 @@ public:
       acceleration.set(a, v.getSpeed());
 
       Velocity velocity(v);
-      //if (a.isLeft())
-      //   velocity.reverse();
+      /*if (a.isLeft())
+      {
+         velocity.reverse();
+      }*/
       PositionVelocityTime pvt;
       pvt.pos = pos;
       pvt.v = velocity;
@@ -81,15 +87,19 @@ public:
       isFired = true;
    }
    bool checkIsFired() { return isFired; }
+   void hitGround() { isFired = false; }
    void draw(ogstream& gout, double time) const
    {
-      if (flightPath.empty())
+      if (flightPath.empty() || isFired == false)
          return;
-      for (auto i = flightPath.rbegin(); i != flightPath.rend(); ++i)
+      if (isFired)
       {
-         gout.drawProjectile(i->pos, time - i->t);
+         for (auto i = flightPath.rbegin(); i != flightPath.rend(); ++i)
+         {
+            gout.drawProjectile(i->pos, time - i->t);
+         }
+         gout.drawProjectile(flightPath.back().pos, 0);
       }
-      gout.drawProjectile(flightPath.back().pos, 0);
    }
 
 private:

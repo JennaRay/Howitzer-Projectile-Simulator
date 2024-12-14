@@ -61,7 +61,9 @@ void runSimulation(const Position& posUpperRight)
 }
 
 void Simulator::setup()
-{
+{  
+
+    simulationTime = -1.0;
     // generate position for the howitzer
     howitzer.generatePosition(posUpperRight);
 
@@ -70,6 +72,7 @@ void Simulator::setup()
 
     // reset the projectile
     projectile.reset();
+    projectile.setPosition(howitzer.getPosition());
 }
 
 void Simulator::handleInput(const Interface *pUI)
@@ -94,7 +97,34 @@ void Simulator::handleInput(const Interface *pUI)
          velocity.set(howitzer.getElevation(), howitzer.getMuzzleVelocity());
          projectile.fire(howitzer.getElevation(), howitzer.getPosition(), velocity, simulationTime);
          simulationTime = 0.0;
+         statement = "";
       }
       
    }
+}
+
+void Simulator::displayStats(ogstream& gout)
+{
+   double altitude = 0.0;
+   double speed = 0.0;
+   double distance = 0.0;
+   double hangTime = 0.0;
+   if (projectile.checkIsFired())
+   {
+      altitude = projectile.getPosition().getMetersY();
+      speed = projectile.getVelocity().getSpeed();
+      distance = projectile.getPosition().getMetersX() - howitzer.getPosition().getMetersX();
+      if (distance < 0)
+         distance *= -1;
+      hangTime = simulationTime;
+   }
+
+   Position posUpperLeft = Position(23000, 19000);
+   gout.setPosition(posUpperLeft);
+   gout << std::fixed << std::setprecision(1);
+   gout << "Altitude: " << altitude << "m\n";
+   gout << "Speed: " << speed << "m/s\n";
+   gout << "Distance: " << distance << "m\n";
+   gout << "Hang Time: " << hangTime << "s";
+
 }

@@ -23,44 +23,61 @@
 class Simulator
 {
 public:
-   Simulator(const Position& posUpperRight) : ground(Ground(posUpperRight)), howitzer(Howitzer()), projectile(Projectile()), posUpperRight(posUpperRight)  {};
+   Simulator(const Position& posUpperRight) : ground(Ground(posUpperRight)), howitzer(Howitzer()), projectile(Projectile()), posUpperRight(posUpperRight) {};
    void setup();
-   void draw(ogstream& gout, double time) const 
+   void draw(ogstream& gout, double time) const
    {
       ground.draw(gout);
       howitzer.draw(gout, simulationTime);
       projectile.draw(gout, simulationTime);
+      gout.setPosition(Position(10000, 10000));
+      gout << statement;
    };
-   void displayStats(ogstream& gout)
-   {
-      double altitude  = ground.getElevationMeters(projectile.getPosition());
-      double speed = projectile.getVelocity().getSpeed();
-      double distance = howitzer.getPosition().getMetersX() - projectile.getPosition().getMetersX();
-      double hangTime = simulationTime;
-
-      Position posUpperLeft = Position(23000, 19000);
-      gout.setPosition(posUpperLeft);
-      gout << std::fixed << std::setprecision(1);
-      gout << "Altitude: " << altitude << "m\n";
-      gout << "Speed: " << speed << "m/s\n";
-      gout << "Distance: " << distance << "m\n";
-      gout << "Hang Time: " << hangTime << "s";
-      
-   };
+   void displayStats(ogstream& gout);
    Position& getPos() { return posUpperRight; };
    void handleInput(const Interface* pUI);
    void advance()
-   { 
-      projectile.advance(simulationTime); 
+   {
+      projectile.advance(simulationTime);
       if (projectile.checkIsFired())
       {
-         simulationTime += 0.1;
+         simulationTime += 0.5;
+
       }
+   };
+   void checkCollision()
+   {
+      if (projectile.checkIsFired())
+         if (projectile.getPosition().getMetersY() <= 0)
+         {
+            if (projectile.getPosition().getMetersX() >= ground.getTarget().getMetersX() - 1000 && projectile.getPosition().getMetersX() <= ground.getTarget().getMetersX() + 1000)
+            {
+               projectile.hitGround();
+               displayWin();
+               setup();
+            }
+            else
+            {
+               projectile.hitGround();
+               displayLoss();
+               projectile.reset();
+               simulationTime = -1.0;
+            }
+         }
+   };
+   void displayWin()
+   {
+      statement = "You hit the target!";
+   };
+   void displayLoss()
+   {
+      statement = "you missed the target. Try again!";
    };
 private:
    Ground ground;
    Howitzer howitzer;
    Projectile projectile;
    Position posUpperRight;
+   char* statement = "";
    double simulationTime = -1.0;
 };
