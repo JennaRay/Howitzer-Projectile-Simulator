@@ -33,6 +33,8 @@ void callBack(const Interface* pUI, void* p)
    Position pos(10,10);
    gout = pos;
    pSim->draw(gout, 0.0);
+   pSim->handleInput(pUI);
+   pSim->advance();
 }
 
 double Position::metersFromPixels = 40.0;

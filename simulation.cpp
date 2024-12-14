@@ -4,6 +4,7 @@
 #include "uiDraw.h"      // for ogstream
 #include "projectile.h"  // for Projectile class
 #include "angle.h"       // for Angle class
+#include "uiInteract.h"
 
 // Main simulation function
 void runSimulation(const Position& posUpperRight)
@@ -69,4 +70,26 @@ void Simulator::setup()
 
     // reset the projectile
     projectile.reset();
+}
+
+void Simulator::handleInput(const Interface *pUI)
+{
+   if (pUI->isLeft())
+      howitzer.rotate(-0.05);
+   if (pUI->isRight())
+      howitzer.rotate(0.05);
+   if (pUI->isUp() && howitzer.isRight())
+      howitzer.raise(0.003);
+   else if (pUI->isUp() && howitzer.isLeft())
+      howitzer.raise(-0.003);
+   if (pUI->isDown() && howitzer.isRight())
+      howitzer.raise(-0.003);
+   else if (pUI->isDown() && howitzer.isLeft())
+      howitzer.raise(0.003);
+   if (pUI->isSpace())
+   {
+      Velocity velocity;
+      velocity.set(howitzer.getElevation(), howitzer.getMuzzleVelocity());
+      projectile.fire(howitzer.getElevation(), howitzer.getPosition(), velocity, simulationTime);
+   }
 }

@@ -13,6 +13,7 @@
 #include "ground.h"
 #include "howitzer.h"
 #include "projectile.h"
+#include "uiInteract.h"
 
  /*********************************************
   * Simulation
@@ -26,14 +27,20 @@ public:
    void draw(ogstream& gout, double time) const 
    {
       ground.draw(gout);
-      howitzer.draw(gout, time);
-      projectile.draw(gout, time);
+      howitzer.draw(gout, simulationTime);
+      projectile.draw(gout, simulationTime);
    };
    Position& getPos() { return posUpperRight; };
-
+   void handleInput(const Interface* pUI);
+   void advance()
+   { 
+      projectile.advance(simulationTime); 
+      simulationTime += 0.1;
+   };
 private:
    Ground ground;
    Howitzer howitzer;
    Projectile projectile;
    Position posUpperRight;
+   double simulationTime = 0.0;
 };
