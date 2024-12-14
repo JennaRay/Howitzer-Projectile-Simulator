@@ -66,8 +66,8 @@ public:
       acceleration.set(a, v.getSpeed());
 
       Velocity velocity(v);
-      //if (a.isLeft())
-      //   velocity.reverse();
+      if (a.isLeft())
+         velocity.reverse();
       PositionVelocityTime pvt;
       pvt.pos = pos;
       pvt.v = velocity;
