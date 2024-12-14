@@ -47,7 +47,6 @@ void runSimulation(const Position& posUpperRight)
         else if ((input == 'F' || input == 'f') && !projectileFired)
         {
             Velocity initialVelocity;
-            initialVelocity.setSpeed(100.0); // Replace with logic for initial velocity
             projectile.fire(howitzerAngle, howitzerPos, initialVelocity, simulationTime);
             projectileFired = true;
         }
@@ -56,21 +55,18 @@ void runSimulation(const Position& posUpperRight)
             isRunning = false;
         }
 
- #include "simulation.h"  // for SIMULATION
-#include "ground.h"
-#include "howitzer.h"
-#include "projectile.h"
-#include "uiInteract.h"
+
+    }
+}
 
 void Simulator::setup()
 {
-   // generate position for the howitzer
-   howitzer.generatePosition(posUpperRight);
+    // generate position for the howitzer
+    howitzer.generatePosition(posUpperRight);
 
-   // reset the ground
-   ground.reset(howitzer.getPosition());
+    // reset the ground
+    ground.reset(howitzer.getPosition());
 
-   // reset the projectile
-   projectile.reset();
+    // reset the projectile
+    projectile.reset();
 }
-

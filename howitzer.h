@@ -94,13 +94,15 @@ public:
         elevation.setRadians(elevation.normalize(elevation.getRadians()));
     }
 
+
     // raise (or lower) the howitzer
     void raise(double radian)
     {
         elevation.setRadians(elevation.getRadians() - radian);
 
-        elevation.setRadians(elevation.normalize(elevation.getRadians()));
     }
+
+   
 
 
     void setMuzzleVelocity(double velocity) {
@@ -116,4 +118,5 @@ private:
     Position position;      // initial position of the projectile
     double muzzleVelocity;  // muzzle velocity, defaults to 827.0 m/s
     Angle elevation;        // the elevation of the howitzer where 0 is up and positive is right.
+	Angle angle;            // the angle of the howitzer
 };

@@ -290,7 +290,7 @@ private:
        h.raise(-0.1);
 
        // Verify
-       assertEquals(h.getElevation().getRadians(), -0.6);
+       assertUnit(h.getElevation().getRadians(), -0.6);
    }
 
    /*********************************************
@@ -308,7 +308,7 @@ private:
        h.raise(0.1);
 
        // Verify
-       assertEquals(h.getElevation().getRadians(), 0.4);
+       assertUnit(h.getElevation().getRadians(), 0.4);
    }
 
    /*********************************************

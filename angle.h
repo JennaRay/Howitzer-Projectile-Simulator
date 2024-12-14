@@ -50,7 +50,7 @@ public:
    //    | a /
    //    |  /
    //    | /
-   // dy = cos a
+   // dy = cos aA
    // dx = sin a
    double getDx() const { return sin(radians); }
    double getDy() const { return cos(radians); }
