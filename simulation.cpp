@@ -87,9 +87,14 @@ void Simulator::handleInput(const Interface *pUI)
    else if (pUI->isDown() && howitzer.isLeft())
       howitzer.raise(0.003);
    if (pUI->isSpace())
-   {
-      Velocity velocity;
-      velocity.set(howitzer.getElevation(), howitzer.getMuzzleVelocity());
-      projectile.fire(howitzer.getElevation(), howitzer.getPosition(), velocity, simulationTime);
+   {  
+      if (!projectile.checkIsFired())
+      {
+         Velocity velocity;
+         velocity.set(howitzer.getElevation(), howitzer.getMuzzleVelocity());
+         projectile.fire(howitzer.getElevation(), howitzer.getPosition(), velocity, simulationTime);
+         simulationTime = 0.0;
+      }
+      
    }
 }

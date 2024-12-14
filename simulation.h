@@ -35,12 +35,20 @@ public:
    void advance()
    { 
       projectile.advance(simulationTime); 
-      simulationTime += 0.1;
+      if (projectile.checkIsFired())
+      {
+         simulationTime += 0.1;
+         if (ground.getElevationMeters(projectile.getPosition()) <= 0)
+         {
+            projectile.reset();
+            simulationTime = -1.0;
+         }
+      }
    };
 private:
    Ground ground;
    Howitzer howitzer;
    Projectile projectile;
    Position posUpperRight;
-   double simulationTime = 0.0;
+   double simulationTime = -1.0;
 };
