@@ -22,12 +22,15 @@ class Simulator
 {
 public:
    Simulator(const Position& posUpperRight) : ground(Ground(posUpperRight)), howitzer(Howitzer()), projectile(Projectile()), posUpperRight(posUpperRight)  {};
+   void setup();
    void draw(ogstream& gout, double time) const 
    {
       ground.draw(gout);
       howitzer.draw(gout, time);
+      projectile.draw(gout, time);
    };
    Position& getPos() { return posUpperRight; };
+
 private:
    Ground ground;
    Howitzer howitzer;
