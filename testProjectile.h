@@ -180,7 +180,7 @@ private:
       {
          assertEquals(p.flightPath.front().pos.x, 111.0);
          assertEquals(p.flightPath.front().pos.y, 222.0);
-         assertEquals(p.flightPath.front().v.dx, -100.0);
+         assertUnit(p.flightPath.front().v.dx, -100.0);
          assertEquals(p.flightPath.front().v.dy, 0.0);
          assertEquals(p.flightPath.front().t, 1.0);
       }
