@@ -93,4 +93,5 @@ public:
    void drawHowitzer(const Position& pos, double angle, double age)          { assert(false); }
    void drawTarget(const Position& pos)                                      { assert(false); }
    void drawText(const Position& topLeft, const char* text)                  { assert(false); }
+
 };

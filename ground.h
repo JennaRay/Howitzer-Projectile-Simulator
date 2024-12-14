@@ -27,16 +27,33 @@ class Ground
 public:
    // the constructor generates the ground
    Ground(const Position &posUpperRight);
-   Ground() : ground(nullptr), iHowitzer(0), iTarget(0) {}
+   Ground() : ground(nullptr), iHowitzer(0), iTarget(0) {
+       int width = static_cast<int>(posUpperRight.getMetersX());
+       ground = new double[width];
+
+       // Generate random terrain
+       double elevation = 50.0; // Start elevation (meters)
+       for (int i = 0; i < width; ++i)
+       {
+           elevation += (rand() % 21 - 10); // Random changes in elevation
+           ground[i] = std::max(0.0, elevation); // Keep elevation non-negative
+       }
+
+       // Place the target randomly
+       iTarget = rand() % width;
+
+       // Place the howitzer randomly
+       iHowitzer = rand() % width;
+   }
    
    // reset the game
-   void reset(Position & posHowitzer);
+   void reset(Position& posHowitzer);
 
    // draw the ground on the screen
-   void draw(ogstream & gout) const;
+   void draw(ogstream& gout) const;
 
    // determine how high the Point is off the ground
-   double getElevationMeters(const Position & pos) const;
+   double getElevationMeters(const Position& pos) const;
 
    // where the the target located?
    Position getTarget() const;

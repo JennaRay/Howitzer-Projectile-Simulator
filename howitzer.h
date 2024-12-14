@@ -20,6 +20,8 @@
 #pragma once
 
 #define DEFAULT_MUZZLE_VELOCITY   827.00     // m/s
+#define MIN_ELEVATION 0
+#define MAX_ELEVATION (M_PI / 2)
 
 
  /**********************************************************************
@@ -95,16 +97,15 @@ public:
     // raise (or lower) the howitzer
     void raise(double radian)
     {
-        if (elevation.isRight())
-            elevation.setRadians(elevation.getRadians() - radian);
-        else if (elevation.isLeft())
-            elevation.setRadians(elevation.getRadians() + radian);
-        else
-            elevation.setRadians(elevation.getRadians() + radian);
+        elevation.setRadians(elevation.getRadians() - radian);
+
+        elevation.setRadians(elevation.normalize(elevation.getRadians()));
     }
 
 
     void setMuzzleVelocity(double velocity) {
+        if (velocity <= 0)
+            throw std::invalid_argument("Muzzle velocity must be positive.");
         muzzleVelocity = velocity;
     }
 

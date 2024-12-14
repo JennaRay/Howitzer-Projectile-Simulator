@@ -45,6 +45,7 @@ public:
    // setters
    virtual void setDX(double dx) { this->dx = dx; }
    virtual void setDY(double dy) { this->dy = dy; }
+   virtual void setSpeed(double speed);
    virtual void set(const Angle & angle, double magnitude);
    virtual void addDX(double dx) { this->dx += dx; }
    virtual void addDY(double dy) { this->dy += dy; }

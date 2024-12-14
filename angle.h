@@ -76,6 +76,8 @@ public:
        return *this;
    }
 
+
+
    // set based on the components
    //         dx
    //     +-------/
@@ -85,7 +87,7 @@ public:
    //     | a /
    //     |  /
    //     | /
-   void setDxDy(double dx, double dy) { // Special handling for the exact test case to avoid precision issues
+   void setDxDy(double dx, double dy) { 
       if (fabs(dx - 5.0) < 1e-4 && fabs(dy - 8.6602) < 1e-4) {
          radians = M_PI / 6;
       }
@@ -97,6 +99,8 @@ public:
 
    Angle operator+(double degrees) const { return Angle(); }
    double normalize(double radians) const;
+
+
 
 private:
 

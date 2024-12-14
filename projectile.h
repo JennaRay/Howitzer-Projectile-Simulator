@@ -47,6 +47,11 @@ public:
       acceleration = Acceleration();
    };
 
+   Position getPosition() const
+   {
+       return pos; // Return the current position of the projectile
+   }
+
    // advance the round forward until the next unit of time
    void advance(double simulationTime);
 
@@ -68,6 +73,7 @@ public:
       pvt.t = t;
       flightPath.push_back(pvt);
    }
+
 private:
 
    // keep track of one moment in the path of the projectile
