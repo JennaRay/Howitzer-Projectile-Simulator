@@ -27,9 +27,9 @@ public:
    void setup();
    void draw(ogstream& gout, double time) const
    {
+      projectile.draw(gout, simulationTime);
       ground.draw(gout);
       howitzer.draw(gout, simulationTime);
-      projectile.draw(gout, simulationTime);
       gout.setPosition(Position(10000, 10000));
       gout << statement;
    };
