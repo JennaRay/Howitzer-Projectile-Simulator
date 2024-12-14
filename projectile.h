@@ -52,6 +52,10 @@ public:
    {
        return pos; // Return the current position of the projectile
    }
+   Velocity getVelocity() const
+   {
+      return v; // Return the current velocity of the projectile
+   }
 
    // advance the round forward until the next unit of time
    void advance(double simulationTime);
@@ -66,8 +70,8 @@ public:
       acceleration.set(a, v.getSpeed());
 
       Velocity velocity(v);
-      if (a.isLeft())
-         velocity.reverse();
+      //if (a.isLeft())
+      //   velocity.reverse();
       PositionVelocityTime pvt;
       pvt.pos = pos;
       pvt.v = velocity;
@@ -81,7 +85,7 @@ public:
    {
       if (flightPath.empty())
          return;
-      gout.drawProjectile(flightPath.back().pos, time);
+      gout.drawProjectile(flightPath.back().pos, flightPath.back().t);
    }
 
 private:

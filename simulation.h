@@ -14,6 +14,7 @@
 #include "howitzer.h"
 #include "projectile.h"
 #include "uiInteract.h"
+#include <iomanip>
 
  /*********************************************
   * Simulation
@@ -30,6 +31,22 @@ public:
       howitzer.draw(gout, simulationTime);
       projectile.draw(gout, simulationTime);
    };
+   void displayStats(ogstream& gout)
+   {
+      double altitude  = ground.getElevationMeters(projectile.getPosition());
+      double speed = projectile.getVelocity().getSpeed();
+      double distance = howitzer.getPosition().getMetersX() - projectile.getPosition().getMetersX();
+      double hangTime = simulationTime;
+
+      Position posUpperLeft = Position(23000, 19000);
+      gout.setPosition(posUpperLeft);
+      gout << std::fixed << std::setprecision(1);
+      gout << "Altitude: " << altitude << "m\n";
+      gout << "Speed: " << speed << "m/s\n";
+      gout << "Distance: " << distance << "m\n";
+      gout << "Hang Time: " << hangTime << "s";
+      
+   };
    Position& getPos() { return posUpperRight; };
    void handleInput(const Interface* pUI);
    void advance()
@@ -38,11 +55,6 @@ public:
       if (projectile.checkIsFired())
       {
          simulationTime += 0.1;
-         if (ground.getElevationMeters(projectile.getPosition()) <= 0)
-         {
-            projectile.reset();
-            simulationTime = -1.0;
-         }
       }
    };
 private:
