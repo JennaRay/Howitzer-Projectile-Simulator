@@ -85,7 +85,11 @@ public:
    {
       if (flightPath.empty())
          return;
-      gout.drawProjectile(flightPath.back().pos, flightPath.back().t);
+      for (auto i = flightPath.rbegin(); i != flightPath.rend(); ++i)
+      {
+         gout.drawProjectile(i->pos, time - i->t);
+      }
+      gout.drawProjectile(flightPath.back().pos, 0);
    }
 
 private:
